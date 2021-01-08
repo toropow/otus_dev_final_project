@@ -1,0 +1,41 @@
+version: '3.5'
+
+services:
+  app:
+    image: lastalex/cinema_friday:1.0.0
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    environment:
+      PG_HOST: ${PG_HOST}
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: ${DEBUG}
+      PG_USER: ${PG_USER}
+      PG_PASSWORD: ${POSTGRES_PASSWORD}
+      PG_DB_NAME: ${POSTGRES_DB}
+      PG_PORT: ${PG_PORT}
+      COVERALLS_REPO_TOKEN: ${COVERALLS_REPO_TOKEN}
+    ports:
+      - 8000:8000
+    links:
+      - pg
+    command: >
+      sh -c "python manage.py migrate &&
+            python manage.py load_data &&
+            python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - pg
+  pg:
+    image: postgres:12
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DB_NAME}
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  postgres_data:

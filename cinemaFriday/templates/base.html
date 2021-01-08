@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <title>{% block title %}{% endblock %}</title>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Библиотека</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Доставка <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Новинки</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Бестселлеры</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container-fluid">
+{% block main %}
+{% endblock %}
+</div>
+
+
+</body>
+</html>
