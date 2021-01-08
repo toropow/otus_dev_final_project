@@ -1,12 +1,16 @@
-<h1>GITLAB CI/CD </h1>
+Для запуска необходимо выполнить:
+0. Установить зависимости из requirements.txt 
+1. Создать файл .env и определить в нем следующие переменные: 
+   * SECRET_KEY
+   * DEBUG
+   * PG_USER
+   * PG_PASSWORD
+   * PG_DB_NAME 
+   * PG_HOST 
+   * PG_PORT
+2. Запустить БД: docker-compose --env-file .\cinemaFriday\cinemaFriday\.env up pg
+3. Накатить миграции на бд: python manage.py migrate
+4. Заполнить данные для примера: python manage.py upload_data_fb
+5. Запустить сервирс: python manage.py runserver
 
-[![Coverage Status](https://coveralls.io/repos/gitlab/toropow/otus_dev_ci_gitlab/badge.svg?branch=HEAD)](https://coveralls.io/gitlab/toropow/otus_dev_ci_gitlab?branch=HEAD)
 <hr>
-Процесс CI/CD <br>
-1. Запустить сервис для скачивания и установки контейра докер на локальном host (https://github.com/toropow/otus_webhook). <br> 
-2. Запустить ngrok и обновить url в .gitlab-ci.yml <br>
-3. Сделать commit в ветку main. Запустится gitlab ci. <br>
-4. После установки и прогона тестов (+ покрытие в coveralls) докер-образ запушится (через docker in docker) в docker registry. <br> 
-5. После пуша нового образа прозойдет обращение по API, и на локальном хосте запустится образ docker.  <br>
-
-
