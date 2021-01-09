@@ -2,7 +2,7 @@
 {% block title %}Подробнее{% endblock %}
 
 {% block main %}
-
+{% load static %}
 <div align="center">
     <h1>Картотека фильмов</h1>
 </div>
@@ -12,21 +12,21 @@
 
         <div class="col-md-auto">
         <div class="card" style="width: 18rem;">
-          <img src="" class="card-img-top" alt="...">
+          <img src="{% static 'images/cinema.jpg'%}" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">{{ film.movie_title }}</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Рейтинг: {{ film.rating }}</li>
-            <li class="list-group-item">Количество отзывов: {{ film.review.count }}</li>
+            <li class="list-group-item">Рейтинг: {{ film.review_set.all|join:", " }}</li>
+            <li class="list-group-item">Количество отзывов: {{ film.count_review }}</li>
             <li class="list-group-item">Актеры: {{ film.actor.all|join:", " }}</li>
             <li class="list-group-item">Год выпуска: {{ film.production_year }}</li>
             <li class="list-group-item">Жанр: {{ film.genre.all|join:", " }}</li>
           </ul>
           <div class="card-body">
-            <a href="#" class="card-link">Подробнее</a>
-            <a href="#" class="card-link">Оставить отзыв</a>
+            <a href="{% url 'catalog:film_detail' film.pk %}" class="card-link">Подробнее</a>
+            <a href="{% url 'catalog:create' %}" class="card-link">Оставить отзыв</a>
           </div>
             </div>
             </div>

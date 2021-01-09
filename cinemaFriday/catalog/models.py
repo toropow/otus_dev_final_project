@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Avg
+from django.db.models import Avg, Count
 
 
 class Country(models.Model):
@@ -31,30 +31,8 @@ class Genre(models.Model):
         return self.genre_name
 
 
-class AuthorReview(models.Model):
-    fio = models.CharField(max_length=128, null=False, default='')
-
-    def __str__(self):
-        return self.fio
-
-
 class Tag(models.Model):
     tag_name = models.CharField(max_length=32, unique=True)
-
-
-class Review(models.Model):
-    film_review_title = models.CharField(max_length=256, null=False, blank=False)
-    film_review = models.TextField(blank=False)
-    author_review = models.ForeignKey(AuthorReview, on_delete=models.PROTECT)
-    rating = models.PositiveSmallIntegerField(null=True, default=0, blank=True)  # Рейтинг
-
-    def __str__(self):
-        return f"Title: {self.film_review_title}, " \
-               f"Review: {self.film_review}" \
-               f"Author: {self.author_review}"
-
-    class Meta:
-        unique_together = ['film_review', 'film_review_title']
 
 
 class Film(models.Model):
@@ -69,7 +47,7 @@ class Film(models.Model):
     director = models.ManyToManyField(MovieFigure, related_name='director')  # режисер
     producer = models.ManyToManyField(MovieFigure, related_name='producer')  # продюсер
     actor = models.ManyToManyField(MovieFigure, related_name='actors')  # актеры
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)  # Отзывы
+    # review = models.ForeignKey(Review, on_delete=models.SET_NULL, null=True, blank=True, related_name='review')  # Отзывы
     tag = models.ForeignKey(Tag, blank=True, null=True, on_delete=models.PROTECT)  # Теги к фильмам
 
     @property
@@ -77,8 +55,35 @@ class Film(models.Model):
         rating_value = Film.objects.prefetch_related('review').filter(id=self.id).aggregate(Avg('review__rating'))
         return round(rating_value['review__rating__avg'], 1)
 
+    @property
+    def count_review(self):
+        count_review = Film.objects.prefetch_related('review').filter(id=self.id).count
+        return count_review
+
     def __str__(self):
         return self.movie_title
 
     class Meta:
         unique_together = ['movie_title', 'production_year']
+
+
+class Review(models.Model):
+    film_review_title = models.CharField(max_length=256, null=False, blank=False)
+    film_review = models.TextField(blank=False)
+    rating = models.PositiveSmallIntegerField(null=True, default=0, blank=True)  # Рейтинг
+    film = models.ForeignKey(Film, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f"Title: {self.film_review_title}, " \
+               f"Review: {self.film_review}"
+
+    class Meta:
+        unique_together = ['film_review', 'film_review_title']
+
+
+class AuthorReview(models.Model):
+    fio = models.CharField(max_length=128, null=False, default='')
+    review = models.ForeignKey(Review, on_delete=models.PROTECT, related_name='review')
+
+    def __str__(self):
+        return self.fio

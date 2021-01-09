@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Новый отзыв о фильме{% endblock %}
+
+{% block main %}
+{% load static %}
+<div align="center">
+    <h1>Ваше мнение о фильме</h1>
+</div>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class = "btn btn-primary">Сохранить</button>
+</form>
+
+
+
+{% endblock %}
