@@ -12,6 +12,7 @@ class AboutView(TemplateView):
         context['active_page'] = '/about/'
         return context
 
+
 class FilmView(ListView):
     queryset = Film.objects.prefetch_related('actor__actors', 'genre', 'review_set').all()
     context_object_name = 'films'
@@ -21,6 +22,7 @@ class FilmView(ListView):
     #     queryset = {'all_films': Film.objects.prefetch_related('actor__actors', 'genre').all(),
     #                 'review': Review.objects.select_related('film').all()}
     #     return queryset
+
 
 class FilmDetailView(DetailView):
     queryset = Film.objects.prefetch_related('actor__actors', 'genre', 'review_set').all()
@@ -35,4 +37,8 @@ class ReviewCreateView(CreateView):
     fields = '__all__'
 
 
-
+class FilmCreateView(CreateView):
+    model = Film
+    template_name = 'catalog/create_film.html'
+    success_url = '/'
+    fields = '__all__'

@@ -15,7 +15,7 @@
           <img src="{% static 'images/cinema.jpg'%}" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">{{ film.movie_title }}</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Рейтинг: {{ film.rating }}</li>
@@ -32,6 +32,15 @@
             </div>
 
     {% endfor %}
+              <div class="col py-2 px-2">
+        <div class="card" style="width: 18rem;">
+             <div class="card-body">
+            <a href="{% url 'catalog:create_film' %}" class="card-link">Добавить новый фильм</a>
+          </div>
+            </div>
+                  </div>
+
+
          </div>
     </div>
 
