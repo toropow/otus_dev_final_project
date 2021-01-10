@@ -48,12 +48,10 @@ class Film(models.Model):
     director = models.ManyToManyField(MovieFigure, related_name='director')  # режисер
     producer = models.ManyToManyField(MovieFigure, related_name='producer')  # продюсер
     actor = models.ManyToManyField(MovieFigure, related_name='actors')  # актеры
-    # review = models.ForeignKey(Review, on_delete=models.SET_NULL, null=True, blank=True, related_name='review')  # Отзывы
     tag = models.ForeignKey(Tag, blank=True, null=True, on_delete=models.PROTECT)  # Теги к фильмам
 
     @property
     def rating(self):
-       # rating_value = Film.objects.filter(review__film_id=self.id).prefetch_related('review_set').aggregate(Avg('review_set__rating'))
         rating_value = Film.objects.prefetch_related('review_set').filter(review__film_id=self.id).aggregate(Avg('review__rating'))
         return round(rating_value['review__rating__avg'] if rating_value['review__rating__avg'] else 0, 1)
 
