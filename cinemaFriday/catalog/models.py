@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Avg, Count
+from django.contrib.auth.models import User
 
 
 class Country(models.Model):
@@ -52,12 +53,13 @@ class Film(models.Model):
 
     @property
     def rating(self):
-        rating_value = Film.objects.prefetch_related('review').filter(id=self.id).aggregate(Avg('review__rating'))
-        return round(rating_value['review__rating__avg'], 1)
+       # rating_value = Film.objects.filter(review__film_id=self.id).prefetch_related('review_set').aggregate(Avg('review_set__rating'))
+        rating_value = Film.objects.prefetch_related('review_set').filter(review__film_id=self.id).aggregate(Avg('review__rating'))
+        return round(rating_value['review__rating__avg'] if rating_value['review__rating__avg'] else 0, 1)
 
     @property
     def count_review(self):
-        count_review = Film.objects.prefetch_related('review').filter(id=self.id).count
+        count_review = Film.objects.prefetch_related('review_set').filter(review__film_id=self.id).count
         return count_review
 
     def __str__(self):

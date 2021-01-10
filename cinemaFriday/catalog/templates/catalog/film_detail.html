@@ -44,28 +44,39 @@
         <td>Актеры:</td>
         <td>{{ film.actor.all|join:", " }}</td>
     </tr>
+    <tr>
+        <td>Средний рейтинг:</td>
+        <td>{{ film.rating }}</td>
+    </tr>
     </tbody>
 </table>
 <hr>
+
+
 <div class="container">
     <div class="row align-items-start">
+        {% for review in film.review_set.all %}
+        <div class="col py-auto px-auto">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ review.film_review_title }} </h5>
+                            <p class="card-text">Рейтинг: {{ review.rating }} </p>
+                            <p class="card-text">Автор: {{ review.author_review.fio }} </p>
+                            <p class="card-text">{{ review.film_review }} </p>
 
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ film.review.film_review_title }} </h5>
-                        <p class="card-text">Рейтинг: {{ film.review.rating }}  </p>
-                        <p class="card-text">Автор: {{ film.review.author_review.fio }}  </p>
-                        <p class="card-text">{{ film.review.film_review }} </p>
-
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        {% endfor %}
     </div>
 </div>
+<br>
+
+
 <br>
 
 <div class="container">

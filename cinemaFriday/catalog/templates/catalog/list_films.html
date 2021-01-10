@@ -10,7 +10,7 @@
          <div class="row align-items-start">
     {% for film in films %}
 
-        <div class="col-md-auto">
+        <div class="col py-2 px-2">
         <div class="card" style="width: 18rem;">
           <img src="{% static 'images/cinema.jpg'%}" class="card-img-top" alt="...">
           <div class="card-body">
@@ -18,7 +18,7 @@
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Рейтинг: {{ film.review_set.all|join:", " }}</li>
+            <li class="list-group-item">Рейтинг: {{ film.rating }}</li>
             <li class="list-group-item">Количество отзывов: {{ film.count_review }}</li>
             <li class="list-group-item">Актеры: {{ film.actor.all|join:", " }}</li>
             <li class="list-group-item">Год выпуска: {{ film.production_year }}</li>
