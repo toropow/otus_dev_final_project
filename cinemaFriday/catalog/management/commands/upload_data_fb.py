@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from catalog.models import Country, MovieRole, MovieFigure, Genre, AuthorReview, Review, Film
+from django.contrib.auth.models import User
 import factory
 from random import randint
 from datetime import timedelta
@@ -37,6 +38,7 @@ class AuthorReviewFactory(factory.django.DjangoModelFactory):
         model = AuthorReview
 
     fio = factory.Faker('name_nonbinary')
+    #user = factory.SubFactory(User)
     review = factory.Iterator(Review.objects.all())
 
 

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}" >
     <script src="{% static 'js/jquery-3.5.1.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <title>{% block title %}{% endblock %}</title>
@@ -21,6 +22,16 @@
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'catalog:about' %}">О нас<span class="sr-only">(current)</span></a>
       </li>
+       <li class="nav-item">
+        <a class="nav-link disabled" href="#">Новинки</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Бестселлеры</a>
+      </li>
+      {% if user.is_authenticated %}
+      <li class="nav-item active">
+        <a class="nav-link">Привет, {{user.username}}!<span class="sr-only">(current)</span></a>
+      </li>
         <li class="nav-item active">
         <a class="nav-link" href="{% url 'catalog:create_film' %}">Добавить фильм<span class="sr-only">(current)</span></a>
       </li>
@@ -28,12 +39,19 @@
         <li class="nav-item active">
         <a class="nav-link" href="{% url 'catalog:create' %}">Добавить отзыв<span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Новинки</a>
+
+        <li class="nav-item active">
+        <a class="nav-link" href="{% url 'catalog:logout' %}">Выйти<span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Бестселлеры</a>
+
+      {% else %}
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'catalog:login' %}">Войти<span class="sr-only">(current)</span></a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'catalog:register' %}">Регистрация<span class="sr-only">(current)</span></a>
+      </li>
+      {% endif %}
     </ul>
   </div>
 </nav>

@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from .models import Film, Review
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import TemplateView
+from .forms import RegistrationForm, LoginForm
+from django.contrib.auth.models import User
 
 
 class AboutView(TemplateView):
@@ -42,3 +45,20 @@ class FilmCreateView(CreateView):
     template_name = 'catalog/create_film.html'
     success_url = '/'
     fields = '__all__'
+
+
+class UserCreateView(CreateView):
+    model = User
+    form_class = RegistrationForm
+    success_url = '/'
+    template_name = 'catalog/register.html'
+
+
+class LoginUserView(LoginView):
+    form_class = LoginForm
+    success_url = '/'
+    template_name = 'catalog/login.html'
+
+
+class LogoutUserView(LogoutView):
+    pass

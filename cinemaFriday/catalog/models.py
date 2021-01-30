@@ -19,6 +19,7 @@ class MovieRole(models.Model):
 
 class MovieFigure(models.Model):
     fio = models.CharField(max_length=128, null=False)
+    #user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     role = models.ManyToManyField(MovieRole, related_name='role_figure')
 
     def __str__(self):
@@ -40,7 +41,7 @@ class Film(models.Model):
     movie_title = models.CharField(max_length=32, unique=True)  # Название фильма
     production_year = models.DateField(null=False)  # Год производства фильма
     country = models.ForeignKey(Country, on_delete=models.PROTECT)  # Страна производства фильма
-    image = models.ImageField(upload_to='catalog', blank=True, null=True)  # Обложка фильма
+    image = models.ImageField(upload_to='catalog', blank=True, null=True, default='cinema.jpg')  # Обложка фильма
     budget = models.DecimalField(max_digits=8, decimal_places=2)  # Бюджет фильма
     worldwide_gross = models.DecimalField(max_digits=8, decimal_places=2)  # Сборы фильма в мире
     duration = models.DurationField()  # Длительность фильма
@@ -83,6 +84,7 @@ class Review(models.Model):
 
 class AuthorReview(models.Model):
     fio = models.CharField(max_length=128, null=False, default='')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     review = models.ForeignKey(Review, on_delete=models.PROTECT, related_name='review')
 
     def __str__(self):

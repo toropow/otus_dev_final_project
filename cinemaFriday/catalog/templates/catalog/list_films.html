@@ -12,7 +12,7 @@
 
         <div class="col py-2 px-2">
         <div class="card" style="width: 18rem;">
-          <img src="{% static 'images/cinema.jpg'%}" class="card-img-top" alt="...">
+          <img src="{{ film.image.url }}" class="card-img-top" alt="{{ film.movie_title }}">
           <div class="card-body">
             <h5 class="card-title">{{ film.movie_title }}</h5>
 
@@ -26,7 +26,9 @@
           </ul>
           <div class="card-body">
             <a href="{% url 'catalog:film_detail' film.pk %}" class="card-link">Подробнее</a>
+              {% if user.is_authenticated %}
             <a href="{% url 'catalog:create' %}" class="card-link">Оставить отзыв</a>
+              {% endif %}
           </div>
             </div>
             </div>
@@ -35,7 +37,9 @@
               <div class="col py-2 px-2">
         <div class="card" style="width: 18rem;">
              <div class="card-body">
+                  {% if user.is_authenticated %}
             <a href="{% url 'catalog:create_film' %}" class="card-link">Добавить новый фильм</a>
+                 {% endif %}
           </div>
             </div>
                   </div>

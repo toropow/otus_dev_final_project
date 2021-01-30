@@ -5,8 +5,10 @@
 {% load static %}
 <h1>О фильме: {{ film.movie_title }}</h1>
 <br>
+{% if user.is_authenticated %}
 <a href="{% url 'catalog:create' %}">Новый отзыв</a>
-<img src="{% static 'images/cinema.jpg'%}" class="img-fluid" alt="{{ film.movie_title }}">
+{% endif %}
+<img src="{{ film.image.url }}" class="img-fluid" alt="{{ film.movie_title }}">
 <br>
 <br>
 <table class="table table-hover">

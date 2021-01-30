@@ -4,9 +4,9 @@
 {% block main %}
 {% load static %}
 <div align="center">
-    <h1>Новый фильм для просмотра</h1>
+    <h1>Новый фильм для оценки:</h1>
 </div>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class = "btn btn-primary">Сохранить</button>
