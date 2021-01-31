@@ -19,7 +19,6 @@ class MovieRole(models.Model):
 
 class MovieFigure(models.Model):
     fio = models.CharField(max_length=128, null=False)
-    #user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     role = models.ManyToManyField(MovieRole, related_name='role_figure')
 
     def __str__(self):

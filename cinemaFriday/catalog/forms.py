@@ -9,14 +9,6 @@ class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))
 
 
-# class AnimalForm(forms.ModelForm):
-#     name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-#
-#     class Meta:
-#         model = Animal
-#         exclude = ('user',)
-
-
 class RegistrationForm(UserCreationForm):
     password1 = forms.CharField(label='password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(label='firstname', widget=forms.TextInput(attrs={'class': 'form-control'}))

@@ -21,15 +21,9 @@ class FilmView(ListView):
     context_object_name = 'films'
     template_name = 'catalog/list_films.html'
 
-    # def get_queryset(self):
-    #     queryset = {'all_films': Film.objects.prefetch_related('actor__actors', 'genre').all(),
-    #                 'review': Review.objects.select_related('film').all()}
-    #     return queryset
-
 
 class FilmDetailView(DetailView):
     queryset = Film.objects.prefetch_related('actor__actors', 'genre', 'review_set').all()
-  #  queryset = Film.objects.prefetch_related('actor__actors', 'genre', 'review_set__review').all()
     context_object_name = 'film'
     template_name = 'catalog/film_detail.html'
 
