@@ -39,7 +39,6 @@ class AuthorReviewFactory(factory.django.DjangoModelFactory):
 
     fio = factory.Faker('name_nonbinary')
     #user = factory.SubFactory(User)
-    review = factory.Iterator(Review.objects.all())
 
 
 class ReviewFactory(factory.django.DjangoModelFactory):
@@ -48,36 +47,27 @@ class ReviewFactory(factory.django.DjangoModelFactory):
 
     film_review_title = factory.Faker('sentence', nb_words=3)
     film_review = factory.Faker('sentence', nb_words=20)
-    #author_review = factory.Iterator(AuthorReview.objects.all())
     rating = factory.Iterator([randint(1, 10) for x in range(100)])
     film = factory.Iterator(Film.objects.all())
+    author_review = factory.Iterator(AuthorReview.objects.all())
 
 
 class FilmFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Film
 
-    movie_title = factory.Faker('sentence', nb_words=3)
+    movie_title = factory.Faker('sentence', nb_words=2)
     production_year = factory.Faker('date')
     country = factory.Iterator(Country.objects.all())
     budget = factory.Iterator([float(randint(1000, 100000)) for x in range(100)])
     worldwide_gross = factory.Iterator([float(randint(1000, 100000)) for x in range(100)])
     duration = factory.Iterator([timedelta(minutes=randint(30, 180)) for x in range(100)])
 
-    # review = factory.SubFactory(ReviewFactory)
-
     @factory.post_generation
     def genre(self, create, extracted, **kwargs):
         if extracted:
             for ge in extracted:
                 self.genre.add(ge)
-
-    #
-    # @factory.post_generation
-    # def review(self, create, extracted, **kwargs):
-    #     if extracted:
-    #         for rev in extracted:
-    #             self.review.add(rev)
 
     @factory.post_generation
     def director(self, create, extracted, **kwargs):
@@ -170,14 +160,14 @@ class Command(BaseCommand):
         for film in films:
             print(film)
 
-        print("------ upload Review")
-        reviews = ReviewFactory.create_batch(5)
-        for review in reviews:
-            print(review)
-
         print("------ upload AuthorReview")
         authors_review = AuthorReviewFactory.create_batch(5)
         for author in authors_review:
             print(author)
+
+        print("------ upload Review")
+        reviews = ReviewFactory.create_batch(5)
+        for review in reviews:
+            print(review)
 
         print("------ upload data: end")

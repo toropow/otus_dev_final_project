@@ -68,11 +68,20 @@ class Film(models.Model):
         unique_together = ['movie_title', 'production_year']
 
 
+class AuthorReview(models.Model):
+    fio = models.CharField(max_length=128, null=False, default='')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+
+    def __str__(self):
+        return self.fio
+
+
 class Review(models.Model):
     film_review_title = models.CharField(max_length=256, null=False, blank=False)
     film_review = models.TextField(blank=False)
     rating = models.PositiveSmallIntegerField(null=True, default=0, blank=True)  # Рейтинг
     film = models.ForeignKey(Film, on_delete=models.PROTECT)
+    author_review = models.ForeignKey(AuthorReview, on_delete=models.PROTECT, related_name='review')
 
     def __str__(self):
         return f"Title: {self.film_review_title}, " \
@@ -80,12 +89,3 @@ class Review(models.Model):
 
     class Meta:
         unique_together = ['film_review', 'film_review_title']
-
-
-class AuthorReview(models.Model):
-    fio = models.CharField(max_length=128, null=False, default='')
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
-    review = models.ForeignKey(Review, on_delete=models.PROTECT, related_name='review')
-
-    def __str__(self):
-        return self.fio
