@@ -6,48 +6,48 @@
 <div align="center">
     <h1>Картотека фильмов</h1>
 </div>
-    <div class="container">
-         <div class="row align-items-start">
-    {% for film in films %}
+<div class="container">
+    <div class="row align-items-start">
+        {% for film in films %}
 
         <div class="col py-2 px-2">
-        <div class="card" style="width: 18rem;">
-          <img src="{{ film.image.url }}" class="card-img-top" alt="{{ film.movie_title }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ film.movie_title }}</h5>
+            <div class="card" style="width: 18rem;">
+                <img src="{{ film.image.url }}" class="card-img-top" alt="{{ film.movie_title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ film.movie_title }}</h5>
 
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Рейтинг: {{ film.rating }}</li>
-            <li class="list-group-item">Количество отзывов: {{ film.count_review }}</li>
-            <li class="list-group-item">Актеры: {{ film.actor.all|join:", " }}</li>
-            <li class="list-group-item">Год выпуска: {{ film.production_year }}</li>
-            <li class="list-group-item">Жанр: {{ film.genre.all|join:", " }}</li>
-          </ul>
-          <div class="card-body">
-            <a href="{% url 'catalog:film_detail' film.pk %}" class="card-link">Подробнее</a>
-              {% if user.is_authenticated %}
-            <a href="{% url 'catalog:create' %}" class="card-link">Оставить отзыв</a>
-              {% endif %}
-          </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Рейтинг: {{ film.rating }}</li>
+                    <li class="list-group-item">Количество отзывов: {{ film.count_review }}</li>
+                    <li class="list-group-item">Актеры: {{ film.actor.all|join:", " }}</li>
+                    <li class="list-group-item">Год выпуска: {{ film.production_year }}</li>
+                    <li class="list-group-item">Жанр: {{ film.genre.all|join:", " }}</li>
+                </ul>
+                <div class="card-body">
+                    <a href="{% url 'catalog:film_detail' film.pk %}" class="card-link">Подробнее</a>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'catalog:create' %}" class="card-link">Оставить отзыв</a>
+                    {% endif %}
+                </div>
             </div>
+        </div>
+
+        {% endfor %}
+        {% if user.is_authenticated %}
+        <div class="col py-2 px-2">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+
+                    <a href="{% url 'catalog:create_film' %}" class="card-link">Добавить новый фильм</a>
+
+                </div>
             </div>
+        </div>
 
-    {% endfor %}
-              <div class="col py-2 px-2">
-        <div class="card" style="width: 18rem;">
-             <div class="card-body">
-                  {% if user.is_authenticated %}
-            <a href="{% url 'catalog:create_film' %}" class="card-link">Добавить новый фильм</a>
-                 {% endif %}
-          </div>
-            </div>
-                  </div>
-
-
-         </div>
+        {% endif %}
     </div>
-
+</div>
 
 
 {% endblock %}

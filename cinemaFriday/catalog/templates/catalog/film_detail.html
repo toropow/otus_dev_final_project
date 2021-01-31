@@ -3,11 +3,13 @@
 
 {% block main %}
 {% load static %}
+<div align="center">
 <h1>О фильме: {{ film.movie_title }}</h1>
+    </div>
 <br>
-{% if user.is_authenticated %}
-<a href="{% url 'catalog:create' %}">Новый отзыв</a>
-{% endif %}
+<div class="container">
+    <div class="row">
+        <div class="col">
 <img src="{{ film.image.url }}" class="img-fluid" alt="{{ film.movie_title }}">
 <br>
 <br>
@@ -53,10 +55,11 @@
     </tbody>
 </table>
 <hr>
+</div>
 
 
-<div class="container">
-    <div class="row align-items-start">
+
+    <div class="col">
         {% for review in film.review_set.all %}
         <div class="col py-auto px-auto">
             <div class="row">
@@ -65,57 +68,36 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ review.film_review_title }} </h5>
                             <p class="card-text">Рейтинг: {{ review.rating }} </p>
-                            <p class="card-text">Автор: {{ review.author_review.fio }} </p>
+                            <p class="card-text">Автор: {{ review.review.all|join:", " }} </p>
                             <p class="card-text">{{ review.film_review }} </p>
+                        </div>
+                    </div>
+                </div>
 
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+        <div class="col py-auto px-auto">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'catalog:create' %}">Новый отзыв</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        {% endfor %}
+
     </div>
 </div>
+    </div>
 <br>
 
 
 <br>
-
-<div class="container">
-
-    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#about">О фильме</button>
-    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#review">Отызывы</button>
-    <div id="about" class="collapse">
-        Test
-    </div>
-    <div id="review" class="collapse">
-        Фильм топ
-    </div>
-
-
-    <div class="panel-group" id="collapse-group">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <a data-toggle="collapse" data-parent="#collapse-group" href="#el1">Первый</a>
-            </div>
-            <div id="el1" class="collapse in">
-                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-danger">
-            <div class="panel-heading">
-                <a data-toggle="collapse" data-parent="#collapse-group" href="#el2">Второй</a>
-            </div>
-            <div id="el2" class="collapse">
-                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 {% endblock %}

@@ -60,7 +60,6 @@ class FilmFactory(factory.django.DjangoModelFactory):
     movie_title = factory.Faker('sentence', nb_words=3)
     production_year = factory.Faker('date')
     country = factory.Iterator(Country.objects.all())
-    image = 'catalog/cinema.jpeg'
     budget = factory.Iterator([float(randint(1000, 100000)) for x in range(100)])
     worldwide_gross = factory.Iterator([float(randint(1000, 100000)) for x in range(100)])
     duration = factory.Iterator([timedelta(minutes=randint(30, 180)) for x in range(100)])
@@ -108,9 +107,10 @@ class FilmFactory(factory.django.DjangoModelFactory):
 def delete_all():
     MovieRole.objects.all().delete()
     MovieFigure.objects.all().delete()
+    AuthorReview.objects.all().delete()
     Review.objects.all().delete()
     Genre.objects.all().delete()
-    AuthorReview.objects.all().delete()
+
     Film.objects.all().delete()
     Country.objects.all().delete()
 
