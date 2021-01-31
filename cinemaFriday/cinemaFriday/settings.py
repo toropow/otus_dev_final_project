@@ -60,9 +60,9 @@ WSGI_APPLICATION = 'cinemaFriday.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env.str('PG_DB_NAME'),
-        'USER': env.str('PG_USER'),
-        'PASSWORD':  env.str('PG_PASSWORD'),
+        'NAME': env.str('POSTGRES_DB'),
+        'USER': env.str('POSTGRES_USER'),
+        'PASSWORD':  env.str('POSTGRES_PASSWORD'),
         'HOST': env.str('PG_HOST'),
         'PORT': env.int('PG_PORT'),
     }

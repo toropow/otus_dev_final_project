@@ -1,16 +1,40 @@
-Для запуска необходимо выполнить:
-0. Установить зависимости из requirements.txt 
-1. Создать файл .env и определить в нем следующие переменные: 
+**CinemaFriday** - каталог для фильмов. 
+
+Возможности сервиса:
+- Сервис позволяет добавлять фильмы (только для зарегистрированных пользователей)
+- Оставлять резенции на фильмы (только для зарегистрированных пользователей)
+- Смотреть подробную информацию о фильме (все пользователи)
+- Просматривать отзывы других пользователей (все пользователи)
+- Регистрация пользователя
+- Вход пользователя на портал (login)
+- Выход пользователя из портала (logout) (только для зарегистрированных пользователей)
+
+Архитектура:
+
+Сервис приложение  + PostgreSQL для хранения данных. \
+После push(или PullRequest) в master происходит тестирование портала через GitHub Actions.
+
+Для запуска  сервиса необходимо:
+ 
+Создать файл .env и определить в нем следующие переменные: 
    * SECRET_KEY
    * DEBUG
-   * PG_USER
-   * PG_PASSWORD
-   * PG_DB_NAME 
+   * POSTGRES_USER
+   * POSTGRES_PASSWORD
+   * POSTGRES_DB 
    * PG_HOST 
    * PG_PORT
-2. Запустить БД: docker-compose --env-file .\cinemaFriday\cinemaFriday\.env up pg
-3. Накатить миграции на бд: python manage.py migrate
-4. Заполнить данные для примера: python manage.py upload_data_fb
-5. Запустить сервирс: python manage.py runserver
 
-<hr>
+
+Ручной запуск:
+- Установить зависимости из requirements.txt
+- Запустить БД: docker-compose --env-file .\cinemaFriday\cinemaFriday\.env up pg
+- Накатить миграции на бд: python manage.py migrate
+- Заполнить данные для примера: python manage.py upload_data_fb (загрузка тестовых данных с использованием FactoryBoy)
+- Запустить сервирс: python manage.py runserver
+
+Запуск в докере:
+- Выполнить: docker-compose --env-file .\cinemaFriday\cinemaFriday\.env up
+
+
+Открыть в браузере http://127.0.0.1:8000/

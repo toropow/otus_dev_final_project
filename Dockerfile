@@ -4,7 +4,7 @@ MAINTAINER toropow@gmail.com
 WORKDIR /app
 
 COPY requirements.txt ./
-COPY book_shop ./
+COPY cinemaFriday ./
 COPY .git ./
 
 RUN pip install -r requirements.txt

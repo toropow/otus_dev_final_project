@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from catalog.models import Country, MovieRole, MovieFigure, Genre, AuthorReview, Review, Film
+from catalog.models import Country, MovieRole, MovieFigure, Genre, AuthorReview, Review, Film, Tag
 from django.contrib.auth.models import User
 import factory
 from random import randint
@@ -38,7 +38,6 @@ class AuthorReviewFactory(factory.django.DjangoModelFactory):
         model = AuthorReview
 
     fio = factory.Faker('name_nonbinary')
-    #user = factory.SubFactory(User)
 
 
 class ReviewFactory(factory.django.DjangoModelFactory):
@@ -95,14 +94,15 @@ class FilmFactory(factory.django.DjangoModelFactory):
 
 
 def delete_all():
-    MovieRole.objects.all().delete()
-    MovieFigure.objects.all().delete()
-    AuthorReview.objects.all().delete()
     Review.objects.all().delete()
-    Genre.objects.all().delete()
-
     Film.objects.all().delete()
+    Tag.objects.all().delete()
+    Genre.objects.all().delete()
     Country.objects.all().delete()
+    MovieFigure.objects.all().delete()
+    MovieRole.objects.all().delete()
+    AuthorReview.objects.all().delete()
+
 
 
 class Command(BaseCommand):
